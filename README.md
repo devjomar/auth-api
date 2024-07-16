@@ -18,7 +18,7 @@ A estrutura do projeto está organizada na pasta `src`, contendo:
 É necessário ter um arquivo `.env` na raiz do projeto que contém a chave secreta para a geração do token JWT. O arquivo deve ter a seguinte estrutura:
 
 ```
-JWT_SECRET=suachavesecreta
+SECRET=suachavesecreta
 ```
 
 ### Rotas
