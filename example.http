@@ -1,0 +1,160 @@
+@baseUrl = http://localhost:3333
+@tokenUser = {{loginUser.response.body.token}}
+@tokenAdmin = {{loginAdmin.response.body.token}}
+
+### registra um admin
+
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "john",
+  "role": "admin",
+  "password": "john@doe"
+}
+
+### registra um usuário
+
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "doe",
+  "role": "user",
+  "password": "john@doe"
+}
+
+### Faz login com usuário
+
+# @name loginUser
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "doe",
+  "password": "john@doe"
+}
+
+### Testo o token
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+### Tenta apagar um usuário
+
+DELETE {{baseUrl}}/remove HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+{
+  "username": "john"
+}
+
+### Adiciona o token na black list
+
+DELETE {{baseUrl}}/logout HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+###  Testa se o token ainda funciona
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+### Loga novamente
+
+# @name loginUser
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "doe",
+  "password": "john@doe"
+}
+
+### Remove a própria conta
+
+DELETE {{baseUrl}}/unregister HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+### Testa se o token ainda funciona
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenUser}}
+
+### registra o usuário novamente para teste do admin
+
+POST {{baseUrl}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "doe",
+  "role": "user",
+  "password": "john@doe"
+}
+
+### Logo com admin
+
+# @name loginAdmin
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "john@doe"
+}
+
+### Testo o token
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
+
+### remove o usuário com o token de admin
+
+DELETE {{baseUrl}}/remove HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
+
+{
+  "username": "doe"
+}
+
+### Verifico se o usuário foi deletado
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
+
+### Adiciona o token na black list
+
+DELETE {{baseUrl}}/logout HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
+
+### Testa se o token ainda funciona
+
+GET {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
+
+### Logo novamente
+
+# @name loginAdmin
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "john@doe"
+}
+
+### Remove a própria conta
+
+DELETE {{baseUrl}}/unregister HTTP/1.1
+Content-Type: application/json
+authorization: Bearer {{tokenAdmin}}
